@@ -1,8 +1,11 @@
 package sst;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
 
 /**
  * Author: Francis Beauchamp et William Brossard
@@ -14,27 +17,25 @@ import java.io.IOException;
 public class Sudoku {
 	private final int SIZE = 9;
 	
-	private int[][] board = new int[SIZE][SIZE];
+	private char[][] board = new char[SIZE][SIZE];
 	
 	public Sudoku(String filename) {
 		deserialize(filename);
 	}
 	
 	public void deserialize(String filename) {
-		FileInputStream fis = null;
+		BufferedReader reader = null;
 		try {
-			fis = new FileInputStream(filename);
+			reader = new BufferedReader(new FileReader(filename));
 			
 			int row = 0;
-			int column = 0;
-			int current;
-			while ((current = fis.read()) != -1 || row == 9) {
-				board[row][column] = current;
+			String line;
+			while ((line = reader.readLine()) != null && row != 9) {
 				
-				if (column == 8) {
-					column = 0;
-					++row;
-				}
+				for (int column = 0; column < SIZE; ++column)
+					board[row][column] = line.charAt(column);
+				
+				++row;
 			}
 		} catch (IOException io) {
 			System.out.println("File not found");
@@ -42,8 +43,8 @@ public class Sudoku {
 		} finally {
 			
 			try {
-				if (fis != null)
-					fis.close();
+				if (reader != null)
+					reader.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
