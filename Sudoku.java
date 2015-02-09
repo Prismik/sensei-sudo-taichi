@@ -1,8 +1,12 @@
 package sst;
 
+import java.awt.Point;
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
 
 /**
  * Author: Francis Beauchamp et William Brossard
@@ -12,38 +16,35 @@ import java.io.IOException;
  * Class which represent a sudoku. It can read it from a file and fill the empty spaces.
  */
 public class Sudoku {
-	private final int SIZE = 9;
+	public static final int SIZE = 9;
 	
-	private int[][] board = new int[SIZE][SIZE];
+	private char[][] board = new char[SIZE][SIZE];
 	
 	public Sudoku(String filename) {
 		deserialize(filename);
 	}
 	
 	public void deserialize(String filename) {
-		FileInputStream fis = null;
+		BufferedReader reader = null;
 		try {
-			fis = new FileInputStream(filename);
+			reader = new BufferedReader(new FileReader(filename));
 			
 			int row = 0;
-			int column = 0;
-			int current;
-			while ((current = fis.read()) != -1 || row == 9) {
-				board[row][column] = current;
+			String line;
+			while ((line = reader.readLine()) != null && row != 9) {
 				
-				if (column == 8) {
-					column = 0;
-					++row;
-				}
+				for (int column = 0; column < SIZE; ++column)
+					board[row][column] = line.charAt(column);
+				
+				++row;
 			}
 		} catch (IOException io) {
 			System.out.println("File not found");
 			io.printStackTrace();
 		} finally {
-			
 			try {
-				if (fis != null)
-					fis.close();
+				if (reader != null)
+					reader.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -76,8 +77,12 @@ public class Sudoku {
 
 	@Override
 	public String toString() {
+<<<<<<< HEAD
+		String sudoku = new String();
+=======
 		
 		String sudoku = "";
+>>>>>>> c33c8cb47e6328c995c8ad39f66fca9d37c48b03
 		
 		for (int i = 0; i < SIZE; ++i) {
 			for (int j = 0; j < SIZE; ++j)
@@ -87,5 +92,9 @@ public class Sudoku {
 		}
 		
 		return sudoku;
+	}
+	
+	public char getTileValue(int row, int column) {
+		return board[row][column];
 	}
 }
