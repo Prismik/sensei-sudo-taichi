@@ -1,5 +1,6 @@
 package sst;
 
+import java.awt.Point;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -15,7 +16,7 @@ import java.io.Reader;
  * Class which represent a sudoku. It can read it from a file and fill the empty spaces.
  */
 public class Sudoku {
-	private final int SIZE = 9;
+	public static final int SIZE = 9;
 	
 	private char[][] board = new char[SIZE][SIZE];
 	
@@ -41,7 +42,6 @@ public class Sudoku {
 			System.out.println("File not found");
 			io.printStackTrace();
 		} finally {
-			
 			try {
 				if (reader != null)
 					reader.close();
@@ -53,7 +53,6 @@ public class Sudoku {
 	
 	@Override
 	public String toString() {
-		
 		String sudoku = new String();
 		
 		for (int i = 0; i < SIZE; ++i) {
@@ -64,5 +63,9 @@ public class Sudoku {
 		}
 		
 		return sudoku;
+	}
+	
+	public char getTileValue(int row, int column) {
+		return board[row][column];
 	}
 }
