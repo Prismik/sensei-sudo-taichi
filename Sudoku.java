@@ -77,7 +77,7 @@ public class Sudoku {
 	@Override
 	public String toString() {
 		
-		String sudoku = new String();
+		String sudoku = "";
 		
 		for (int i = 0; i < SIZE; ++i) {
 			for (int j = 0; j < SIZE; ++j)
