@@ -1,12 +1,7 @@
 package sst;
 
 import java.awt.Point;
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
 
 /**
  * Author: Francis Beauchamp et William Brossard
@@ -58,7 +53,7 @@ public class Sudoku {
 	 * @param n: The number for which we test the validity.
 	 */
 	public boolean isValid(int x, int y, int n) {
-		if (n < 1 || n > 9)
+		if (x < 1 || x > 9 || y < 1 || y > 9 || n < 1 || n > 9)
 			return false;
 
 		for (int i = 0; i != SIZE; ++i) {
@@ -88,6 +83,48 @@ public class Sudoku {
 		return sudoku;
 	}
 	
+	public void toHtml() {
+		String out = "<html><head><style>body { background-color: whitesmoke; } " + 
+									"table { border-collapse: collapse; font-family: Calibri, sans-serif; } " +
+									"colgroup, tbody { border: solid 2px; } " +
+									"td { background-color: #FFF985; border: solid 1px orange; height: 1.4em; " +
+									"width: 1.4em; text-align: center; padding: 0; } " +
+									"</style><meta http-equiv='content-type' content='text/html; charset=windows-1252'>" +
+									"<title>Sudoku</title></head><body><center><table>" +
+									"<caption>Sudoku</caption><colgroup><col><col><col><colgroup><col><col><col>" +
+  								"<colgroup><col><col><col>";
+
+		for (int i = 0; i < SIZE; ++i) {
+			if (i % 3 == 0)
+				out += "<tbody>";
+
+			out += "<tr>";
+			for (int j = 0; j < SIZE; ++j)
+				out += "<td><div>" + board[i][j] + "</div></td>";
+			
+			if (i % 3 == 0)
+				out += "</tbody>";
+
+			out += "</tr>";
+		}
+
+		out += "</table></center></body></html>";
+		Writer writer = null;
+		try {
+			writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("solve.htm"), "utf-8"));
+			writer.write(out);
+			writer.flush();
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		} finally {
+			try {
+				writer.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
 	public char getTileValue(int row, int column) {
 		return board[row][column];
 	}

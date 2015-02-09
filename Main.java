@@ -18,6 +18,7 @@ public class Main {
 			
 			Sudoku sudoku = new Sudoku(filename);
 			System.out.print(sudoku.toString());
+			sudoku.toHtml();
 		}
 	}
 }
