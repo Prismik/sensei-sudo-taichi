@@ -34,14 +34,21 @@ public class SudokuSolver {
 	
 	
 	/*
+	 
+	Ce que j'ai noté du tableau
 	AjouterNombre(int[] sudoku, int nbToAdd, int casePresente){
 		sudoku[casePresente] = nbToAdd;
 		
 		if (EstValide(sudoku)) {
 			++casePresente;
-			AjouterNombre
+			AjouterNombre(sudoku, nbToAdd, casePresente);
+		} else {
+			if (nbToAdd++ == 9) {
+				sudoku[casePresente] = 0;
+				return sudoku;
+			}
 		}
-	
+		...
 	} 
 	*/
 	
