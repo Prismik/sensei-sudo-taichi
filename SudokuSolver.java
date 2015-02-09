@@ -18,18 +18,24 @@ public class SudokuSolver {
 			if (currentTile == null)
 				return true;
 			
+			
+			
 			boolean hasSolution = false;
 			if (currentTile.value() != 0)
 				hasSolution = trySolve(currentTile.next());
 			else {
-				int i;
-				for (i = 1; i <= Sudoku.SIZE && !hasSolution; ++i) {
-					if (currentTile.set(i))
+				for (int i = 1; i <= Sudoku.SIZE && !hasSolution; ++i) {
+					if (currentTile.set(i)) {
+						System.out.println(currentTile.getSudoku().toString());
 						hasSolution = trySolve(currentTile.next());
+					}
 				}
+				
+				if (hasSolution == false)
+					currentTile.set(0);
 			}
 			
-			System.out.println(currentTile.getSudoku().toString());
+			
 			
 			return hasSolution;
 	}	
