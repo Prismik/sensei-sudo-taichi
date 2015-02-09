@@ -77,13 +77,7 @@ public class Sudoku {
 
 	@Override
 	public String toString() {
-<<<<<<< HEAD
-		String sudoku = new String();
-=======
-		
 		String sudoku = "";
->>>>>>> c33c8cb47e6328c995c8ad39f66fca9d37c48b03
-		
 		for (int i = 0; i < SIZE; ++i) {
 			for (int j = 0; j < SIZE; ++j)
 				sudoku += board[i][j];
