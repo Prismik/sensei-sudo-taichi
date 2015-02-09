@@ -17,10 +17,10 @@ public class Main {
 			String filename = args[0];
 			
 			Sudoku sudoku = new Sudoku(filename);
-			if (SudokuSolver.solve(sudoku))
+			if (SudokuSolver.run(sudoku))
 				System.out.print(sudoku.toString());
 			else
-				System.out.println("Aucune solution");
+				System.out.println(sudoku.toString() + "Aucune solution");
 
 			sudoku.toHtml();
 		}

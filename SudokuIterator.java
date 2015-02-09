@@ -26,9 +26,10 @@ public class SudokuIterator implements ISudokuIterator {
 	public ISudokuIterator next() {
 		SudokuIterator iter = new SudokuIterator(sudoku);
 		
-		if (this.column != Sudoku.SIZE - 1) 
+		if (this.column != Sudoku.SIZE - 1){
 			iter.column = this.column + 1;
-		else {
+			iter.row = this.row;
+		} else {
 			if (this.row == Sudoku.SIZE - 1)
 				iter = null;
 			else {
@@ -38,7 +39,6 @@ public class SudokuIterator implements ISudokuIterator {
 		}
 		
 		return iter;
-		
 	}
 	
 	public int value() {
