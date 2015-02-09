@@ -20,7 +20,7 @@ public class Main {
 			if (SudokuSolver.run(sudoku))
 				System.out.print(sudoku.toString());
 			else
-				System.out.println(sudoku.toString() + "Aucune solution");
+				System.out.println("Aucune solution");
 
 		}
 	}
