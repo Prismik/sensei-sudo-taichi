@@ -50,6 +50,30 @@ public class Sudoku {
 		}
 	}
 	
+	/**
+	 * Determines if, for a given position in the sudoku, a given number is valid.
+	 * @param x: The vertical position.
+	 * @param y: The horizontal position.
+	 * @param n: The number for which we test the validity.
+	 */
+	public boolean isValid(int x, int y, int n) {
+		if (n < 1 || n > 9)
+			return false;
+
+		for (int i = 0; i != SIZE; ++i) {
+			if (board[i][y] == n)
+				return false;
+
+			if (board[x][i] == n)
+				return false;
+
+			if (board[x/3 * 3 + i/3][y/3 * 3 + i/3] == n)
+				return false;
+		}
+
+		return true;
+	}
+
 	@Override
 	public String toString() {
 		
