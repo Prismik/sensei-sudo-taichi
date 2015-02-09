@@ -66,7 +66,7 @@ public class Sudoku {
 	 * @param n: The number for which we test the validity.
 	 */
 	public boolean isValid(int x, int y, int n) {
-		if (x < 1 || x > 9 || y < 1 || y > 9 || n < 1 || n > 9)
+		if (x < 0 || x > 8 || y < 0 || y > 8 || n < 1 || n > 9)
 			return false;
 
 		for (int i = 0; i != SIZE; ++i) {
@@ -76,7 +76,7 @@ public class Sudoku {
 			if (board[x][i] == n)
 				return false;
 
-			if (board[x/3 * 3 + i/3][y/3 * 3 + i/3] == n)
+			if (board[x/3 * 3 + i/3][y/3 * 3 + i%3] == n)
 				return false;
 		}
 
@@ -140,9 +140,5 @@ public class Sudoku {
 				e.printStackTrace();
 			}
 		}
-	}
-
-	public char getTileValue(int row, int column) {
-		return board[row][column];
 	}
 }

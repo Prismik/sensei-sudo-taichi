@@ -26,9 +26,10 @@ public class SudokuReverseIterator implements ISudokuIterator {
 	public ISudokuIterator next() {
 		SudokuReverseIterator iter = new SudokuReverseIterator(sudoku);
 		
-		if (this.column != 0) 
+		if (this.column != 0) {
 			iter.column = this.column - 1;
-		else {
+			iter.row = this.row;
+		} else {
 			if (this.row == 0)
 				iter = null;
 			else {
