@@ -17,12 +17,11 @@ public class Main {
 			String filename = args[0];
 			
 			Sudoku sudoku = new Sudoku(filename);
-			if (SudokuSolver.run(sudoku)) {
+			if (SudokuSolver.run(sudoku))
 				System.out.print(sudoku.toString());
-				sudoku.toHtml();
-			}
 			else
 				System.out.println(sudoku.toString() + "Aucune solution");
+
 		}
 	}
 }

@@ -101,16 +101,18 @@ public class Sudoku {
 	}
 
 	public void toHtml() {
-		String out = "<html><head><style>body { background-color: whitesmoke; } " + 
+		String out = "<html><head><style>body { background-color: #292700; } " + 
 									"table { border-collapse: collapse; font-family: Calibri, sans-serif; } " +
-									"colgroup, tbody { border: solid 2px; } " +
-									"td { background-color: #FFF985; border: solid 1px orange; height: 1.4em; " +
-									"width: 1.4em; text-align: center; padding: 0; } " +
+									"colgroup, tbody { border: solid 2px #292700; } " +
+									"td { background-color: #FFF985; border: solid 1px #E0D500; height: 2.4em; " +
+									"width: 2.4em; text-align: center; padding: 0; } " +
+									"caption { color: white; font-weight: bold; }" +
 									"</style><meta http-equiv='content-type' content='text/html; charset=windows-1252'>" +
 									"<title>Sudoku</title></head><body><center><table>" +
 									"<caption>Sudoku</caption><colgroup><col><col><col><colgroup><col><col><col>" +
   								"<colgroup><col><col><col>";
 
+  	int rows = 0;
 		for (int i = 0; i < SIZE; ++i) {
 			if (i % 3 == 0)
 				out += "<tbody>";
@@ -119,10 +121,13 @@ public class Sudoku {
 			for (int j = 0; j < SIZE; ++j)
 				out += "<td><div>" + board[i][j] + "</div></td>";
 			
-			if (i % 3 == 0)
-				out += "</tbody>";
-
 			out += "</tr>";
+
+		 	++rows;
+			if (rows == 3) {
+				out += "</tbody>";
+				rows = 0;
+			}
 		}
 
 		out += "</table></center></body></html>";
