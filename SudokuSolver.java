@@ -17,9 +17,7 @@ public class SudokuSolver {
 	private static boolean trySolve(ISudokuIterator currentTile) {
 			if (currentTile == null)
 				return true;
-			
-			
-			
+
 			boolean hasSolution = false;
 			if (currentTile.value() != 0)
 				hasSolution = trySolve(currentTile.next());
@@ -34,8 +32,6 @@ public class SudokuSolver {
 				if (hasSolution == false)
 					currentTile.set(0);
 			}
-			
-			
 			
 			return hasSolution;
 	}	
