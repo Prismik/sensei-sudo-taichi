@@ -23,10 +23,8 @@ public class SudokuSolver {
 				hasSolution = trySolve(currentTile.next());
 			else {
 				for (int i = 1; i <= Sudoku.SIZE && !hasSolution; ++i) {
-					if (currentTile.set(i)) {
-						System.out.println(currentTile.getSudoku().toString());
+					if (currentTile.set(i))
 						hasSolution = trySolve(currentTile.next());
-					}
 				}
 				
 				if (hasSolution == false)
