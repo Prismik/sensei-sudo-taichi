@@ -10,26 +10,28 @@ import java.awt.Point;
  * Class which can solve and fill a sudoku
  */
 public class SudokuSolver {
-	public static void solve(Sudoku sudoku) {
-
-		trySolve(new SudokuIterator(sudoku), 1);
-		
+	public static boolean solve(Sudoku sudoku) {
+		return trySolve(sudoku.iterator());
 	}
 	
-	private static ISudokuIterator trySolve(ISudokuIterator currentTile, int nbToAdd) {
+	private static boolean trySolve(ISudokuIterator currentTile) {
 			if (currentTile == null)
-				return null;
-		
+				return true;
+		  
+			
+			boolean hasSolution = false;
 			// Si la case actuelle est libre, on essaie d'y mettre un chiffre.
-			if (currentTile.value() == '0') {
-				/*if (currentTile.set(nbToAdd))
-					trySolve(currentTile.next(), nbToAdd);
-				else
-					trySolve(currentTile, (nbToAdd + 1) % 9);*/
+			if (currentTile.value() != 0)
+				hasSolution = trySolve(currentTile.next());
+			else {
+				int i;
+				for (i = 1; i <= Sudoku.SIZE && !hasSolution; ++i) {
+					if (currentTile.set(i))
+						hasSolution = trySolve(currentTile.next());
+				}
 			}
 			
-			
-			return trySolve(currentTile.next(), nbToAdd);
+			return hasSolution;
 	}
 	
 	

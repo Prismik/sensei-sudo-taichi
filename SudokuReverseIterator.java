@@ -42,7 +42,15 @@ public class SudokuReverseIterator implements ISudokuIterator {
 		
 	}
 	
-	public char value() {
+	public int value() {
 		return sudoku.getTileValue(row, column);
+	}
+	
+	public Sudoku getSudoku() {
+		return sudoku;
+	}
+	
+	public boolean set(int value) {	
+		return sudoku.set(row, column, value);
 	}
 }

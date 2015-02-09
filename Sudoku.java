@@ -13,7 +13,7 @@ import java.io.*;
 public class Sudoku {
 	public static final int SIZE = 9;
 	
-	private char[][] board = new char[SIZE][SIZE];
+	private int[][] board = new int[SIZE][SIZE];
 	
 	public Sudoku(String filename) {
 		deserialize(filename);
@@ -29,7 +29,7 @@ public class Sudoku {
 			while ((line = reader.readLine()) != null && row != 9) {
 				
 				for (int column = 0; column < SIZE; ++column)
-					board[row][column] = line.charAt(column);
+					board[row][column] = Integer.parseInt("" + line.charAt(column));
 				
 				++row;
 			}
@@ -44,6 +44,19 @@ public class Sudoku {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public boolean set(int row, int column, int value) {
+		boolean isValid = isValid(row, column, value);
+		
+		if (isValid)
+			board[row][column] = value;
+			
+		return isValid;
+	}
+	
+	public int getTileValue(int row, int column) {
+		return board[row][column];
 	}
 	
 	/**
@@ -70,6 +83,10 @@ public class Sudoku {
 		return true;
 	}
 
+	public ISudokuIterator iterator() {
+		return new SudokuIterator(this);
+	}
+	
 	@Override
 	public String toString() {
 		String sudoku = "";
@@ -82,7 +99,7 @@ public class Sudoku {
 		
 		return sudoku;
 	}
-	
+
 	public void toHtml() {
 		String out = "<html><head><style>body { background-color: whitesmoke; } " + 
 									"table { border-collapse: collapse; font-family: Calibri, sans-serif; } " +
