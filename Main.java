@@ -15,13 +15,17 @@ public class Main {
 			System.out.println("Usage: sst filename");
 		else {
 			String filename = args[0];
-			
 			Sudoku sudoku = new Sudoku(filename);
-			if (SudokuSolver.run(sudoku))
-				System.out.print(sudoku.toString());
+			Interval i = new Interval();
+			SudokuSolver solver = new SudokuSolver();
+			if (solver.solve(sudoku)) {
+				i.stop();
+				System.out.print(Long.toString(i.current()) + " milliseconds to solve the sudoku.");
+			}
 			else
 				System.out.println("Aucune solution");
 
+			sudoku.toHtml();
 		}
 	}
 }

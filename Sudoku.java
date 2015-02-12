@@ -61,8 +61,8 @@ public class Sudoku {
 	
 	/**
 	 * Determines if, for a given position in the sudoku, a given number is valid.
-	 * @param x: The vertical position.
-	 * @param y: The horizontal position.
+	 * @param x: The horizontal position.
+	 * @param y: The vertical position.
 	 * @param n: The number for which we test the validity.
 	 */
 	public boolean isValid(int x, int y, int n) {
@@ -72,7 +72,7 @@ public class Sudoku {
 		if (n == 0)
 			return true;
 		
-		for (int i = 0; i != SIZE; ++i) {
+		for(int i = 0; i != SIZE; ++i) {
 			if (board[i][y] == n)
 				return false;
 
@@ -121,11 +121,12 @@ public class Sudoku {
 				out += "<tbody>";
 
 			out += "<tr>";
-			for (int j = 0; j < SIZE; ++j)
-				out += "<td><div>" + board[i][j] + "</div></td>";
-			
-			out += "</tr>";
+			for (int j = 0; j < SIZE; ++j) {
+				String tile = board[i][j] == 0 ? "" : Integer.toString(board[i][j]);
+				out += "<td><div>" + tile + "</div></td>";
+			}
 
+			out += "</tr>";
 		 	++rows;
 			if (rows == 3) {
 				out += "</tbody>";

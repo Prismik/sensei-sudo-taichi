@@ -10,11 +10,21 @@ import java.awt.Point;
  * Class which can solve and fill a sudoku
  */
 public class SudokuSolver {
-	public boolean run(Sudoku sudoku) {
+	volatile private boolean solutionFound;
+	
+	public SudokuSolver() {
+		this.solutionFound = false;
+	}
+	
+	synchronized public void setFoundSolution(boolean foundIt) {
+		this.solutionFound = foundIt;
+	}
+	
+	public boolean solve(Sudoku sudoku) {
 		return trySolve(sudoku.iterator());
 	}
 	
-	private boolean trySolve(ISudokuIterator currentTile) {
+	protected boolean trySolve(ISudokuIterator currentTile) {
 			if (currentTile == null)
 				return true;
 			
@@ -31,8 +41,6 @@ public class SudokuSolver {
 				if (!hasSolution)
 					currentTile.set(0);
 			}
-			
-			
 			
 			return hasSolution;
 	}	

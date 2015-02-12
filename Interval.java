@@ -1,3 +1,5 @@
+package sst;
+
 public class Interval {
 	private long start;
 	private long end;	 
