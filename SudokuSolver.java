@@ -42,7 +42,7 @@ public class SudokuSolver {
 	
 	public int removeNbThreadAuthorized() {
 		synchronized(nbThreadAuthorizedLock) {
-			return (this.nbThreadAuthorized != 0) ? --this.nbThreadAuthorized
+			return (this.nbThreadAuthorized > 0) ? --this.nbThreadAuthorized
 																						 : -1;
 		}
 	}

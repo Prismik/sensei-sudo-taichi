@@ -20,7 +20,9 @@ public class Sudoku {
 	}
 	
 	public Sudoku(Sudoku s) {
-		this.board = s.board.clone();
+		for (int i = 0;i < SIZE; ++i)
+			for (int j = 0;j < SIZE; ++j)
+				this.board[i][j] = s.board[i][j];
 	}
 	
 	public void deserialize(String filename) {

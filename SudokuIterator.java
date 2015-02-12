@@ -13,17 +13,20 @@ public class SudokuIterator implements ISudokuIterator {
 	private Sudoku sudoku;
 	private int row;
 	private int column;
+	private boolean hasEnded;
 	
 	public SudokuIterator(Sudoku sudoku) {
 		this.sudoku = sudoku;
-		row = 0;
-		column = 0;
+		this.row = 0;
+		this.column = 0;
+		this.hasEnded = false;
 	}
 	
 	public SudokuIterator(SudokuIterator iter) {
 		this.sudoku = new Sudoku(iter.sudoku);
-		row = iter.row;
-		column = iter.column;
+		this.row = iter.row;
+		this.column = iter.column;
+		this.hasEnded = iter.hasEnded;
 	}
 	
 	/**
@@ -35,9 +38,12 @@ public class SudokuIterator implements ISudokuIterator {
 		if (this.column != Sudoku.SIZE - 1){
 			iter.column = this.column + 1;
 			iter.row = this.row;
-		} else {
-			if (this.row == Sudoku.SIZE - 1)
-				iter = null;
+		} 
+		else {
+			if (this.row == Sudoku.SIZE - 1) {
+				iter = this;
+				iter.hasEnded = true;
+			}
 			else {
 				iter.row = this.row + 1;
 				iter.column = 0;
@@ -45,6 +51,10 @@ public class SudokuIterator implements ISudokuIterator {
 		}
 		
 		return iter;
+	}
+	
+	public boolean end() {
+		return this.hasEnded;
 	}
 	
 	public ISudokuIterator getCopy() {
