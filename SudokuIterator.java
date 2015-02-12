@@ -20,6 +20,12 @@ public class SudokuIterator implements ISudokuIterator {
 		column = 0;
 	}
 	
+	public SudokuIterator(SudokuIterator iter) {
+		this.sudoku = new Sudoku(iter.sudoku);
+		row = iter.row;
+		column = iter.column;
+	}
+	
 	/**
 	 * Return the next iterator and null if there is no more next
 	 */
@@ -39,6 +45,10 @@ public class SudokuIterator implements ISudokuIterator {
 		}
 		
 		return iter;
+	}
+	
+	public ISudokuIterator getCopy() {
+		return new SudokuIterator(this);
 	}
 	
 	public int value() {

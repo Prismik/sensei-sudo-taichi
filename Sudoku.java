@@ -19,6 +19,10 @@ public class Sudoku {
 		deserialize(filename);
 	}
 	
+	public Sudoku(Sudoku s) {
+		this.board = s.board.clone();
+	}
+	
 	public void deserialize(String filename) {
 		BufferedReader reader = null;
 		try {

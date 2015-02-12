@@ -1,6 +1,7 @@
 package sst;
 
 import java.awt.Point;
+import java.util.ArrayList;
 
 /**
  * Author: Francis Beauchamp et William Brossard
@@ -10,38 +11,52 @@ import java.awt.Point;
  * Class which can solve and fill a sudoku
  */
 public class SudokuSolver {
-	volatile private boolean solutionFound;
+	private Sudoku solution;
+	private final Object solutionLock = new Object();
 	
-	public SudokuSolver() {
-		this.solutionFound = false;
+	private int nbThreadAuthorized;
+	private final Object nbThreadAuthorizedLock = new Object();
+	
+	public SudokuSolver(int nbThreads) {
+		this.solution = null;
+		this.nbThreadAuthorized = nbThreads;
 	}
 	
-	synchronized public void setFoundSolution(boolean foundIt) {
-		this.solutionFound = foundIt;
+	public void setSolution(Sudoku sudoku) {
+		synchronized(solutionLock) {
+			this.solution = sudoku;
+		}
 	}
 	
-	public boolean solve(Sudoku sudoku) {
-		return trySolve(sudoku.iterator());
+	public Sudoku getSolution() {
+		synchronized(solutionLock) {
+			return this.solution;
+		}
 	}
 	
-	protected boolean trySolve(ISudokuIterator currentTile) {
-			if (currentTile == null)
-				return true;
-			
-			boolean hasSolution = false;
-			if (currentTile.value() != 0)
-				hasSolution = trySolve(currentTile.next());
-			else {
-				for (int i = 1; i <= Sudoku.SIZE && !hasSolution; ++i) {
-					if (currentTile.set(i)) {
-						hasSolution = trySolve(currentTile.next());
-					}
-				}
-				
-				if (!hasSolution)
-					currentTile.set(0);
-			}
-			
-			return hasSolution;
-	}	
+	public int addThreadAuthorized() {
+		synchronized(nbThreadAuthorizedLock) {
+			return ++this.nbThreadAuthorized;
+		}
+	}
+	
+	public int removeNbThreadAuthorized() {
+		synchronized(nbThreadAuthorizedLock) {
+			return (this.nbThreadAuthorized != 0) ? --this.nbThreadAuthorized
+																						 : -1;
+		}
+	}
+	
+	public Sudoku solve(Sudoku sudoku) {
+		SudokuSolverThread ss = new SudokuSolverThread(this, new SudokuIterator(sudoku));
+		
+		ss.start();
+		
+		while(getSolution() == null && ss.isAlive());
+		
+		if (ss.isAlive())
+			ss.interrupt();
+		
+		return this.solution;
+	}
 }

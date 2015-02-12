@@ -17,15 +17,19 @@ public class Main {
 			String filename = args[0];
 			Sudoku sudoku = new Sudoku(filename);
 			Interval i = new Interval();
-			SudokuSolver solver = new SudokuSolver();
-			if (solver.solve(sudoku)) {
+			SudokuSolver solver = new SudokuSolver(10);
+			if ((sudoku = solver.solve(sudoku)) != null) {
 				i.stop();
 				System.out.print(Long.toString(i.current()) + " milliseconds to solve the sudoku.");
 			}
-			else
-				System.out.println("Aucune solution");
-
-			sudoku.toHtml();
+			else {
+				i.stop();
+				System.out.println(Long.toString(i.current()) + " milliseconds to solve the sudoku.");
+				System.out.println("No solution found!");
+			}
+			
+			if (sudoku != null)
+				sudoku.toHtml();
 		}
 	}
 }

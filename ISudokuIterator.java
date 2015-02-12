@@ -11,7 +11,8 @@ import java.awt.Point;
  */
 public interface ISudokuIterator {
 	public ISudokuIterator next();
-	public int value();
+	public ISudokuIterator getCopy();
 	public Sudoku getSudoku();
+	public int value();
 	public boolean set(int value);
 }
