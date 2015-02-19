@@ -44,7 +44,7 @@ public class SudokuReverseIterator implements ISudokuIterator {
 				iter = this;
 				iter.hasEnded = true;
 			}	
-		else {
+			else {
 				iter.column = Sudoku.SIZE - 1;
 				
 				iter.row = this.row - 1;

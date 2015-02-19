@@ -14,13 +14,13 @@ public class SudokuSolver {
 	private Sudoku solution;
 	private final Object solutionLock = new Object();
 	
-	public void setSolution(Sudoku solution) {
+	public synchronized void setSolution(Sudoku solution) {
 		synchronized(solutionLock) {
 			this.solution = solution;
 		}
 	}
 	
-	public Sudoku getSolution() {
+	public synchronized Sudoku getSolution() {
 		synchronized(solutionLock) {
 			return this.solution;
 		}
@@ -30,15 +30,20 @@ public class SudokuSolver {
 		solution = null;
 	}
 	
-	public Sudoku solve(Sudoku sudoku) {
+	public Sudoku solve(Sudoku sudoku, int threadNb) {
 		ArrayList<Thread> threads = new ArrayList<Thread>();
 		
-		threads.add(new SudokuSolverThread(this, sudoku.iterator()));
-		threads.add(new SudokuSolverThread(this, new Sudoku(sudoku).reverseIterator()));
-		threads.add(new SudokuSolverThread(this, new Sudoku(sudoku).topDownIterator()));
-		threads.add(new SudokuSolverReverseThread(this, new Sudoku(sudoku).iterator()));
-		threads.add(new SudokuSolverReverseThread(this, new Sudoku(sudoku).reverseIterator()));
-		threads.add(new SudokuSolverThread(this, new Sudoku(sudoku).downTopIterator()));
+		if (threadNb > 0)
+			threads.add(new SudokuSolverThread(this, sudoku.iterator()));
+		
+		if (threadNb > 1)
+			threads.add(new SudokuSolverThread(this, new Sudoku(sudoku).reverseIterator()));
+		
+		if (threadNb > 2)
+			threads.add(new SudokuSolverThread(this, new Sudoku(sudoku).topDownIterator()));
+		
+		if (threadNb > 3)
+			threads.add(new SudokuSolverReverseThread(this, new Sudoku(sudoku).iterator()));
 		
 		for (Thread th : threads)
 			th.start();
