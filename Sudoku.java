@@ -104,10 +104,6 @@ public class Sudoku {
 		return new SudokuTopDownIterator(this);
 	}
 	
-	public ISudokuIterator downTopIterator() {
-		return new SudokuDownTopIterator(this);
-	}
-	
 	@Override
 	public String toString() {
 		String sudoku = "";
