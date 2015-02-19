@@ -16,7 +16,7 @@ public class SudokuSolver {
 	
 	public void setSolution(Sudoku solution) {
 		synchronized(solutionLock) {
-			
+			this.solution = solution;
 		}
 	}
 	
@@ -30,17 +30,20 @@ public class SudokuSolver {
 		solution = null;
 	}
 	
-	public boolean solve(Sudoku sudoku) {
+	public Sudoku solve(Sudoku sudoku) {
 		ArrayList<Thread> threads = new ArrayList<Thread>();
 		
 		threads.add(new SudokuSolverThread(this, sudoku.iterator()));
-		threads.add(new SudokuSolverThread(this, sudoku.reverseIterator()));
+		threads.add(new SudokuSolverThread(this, new Sudoku(sudoku).reverseIterator()));
+		
+		for (Thread th : threads)
+			th.start();
 		
 		boolean isAlive = true;
 		while(getSolution() == null && isAlive) {
 			isAlive = false;
 			for (Thread th : threads)
-				if (th.isAlive())
+				if (th.isAlive()) 
 					isAlive = true;
 		}
 				
@@ -48,27 +51,6 @@ public class SudokuSolver {
 			if (th.isAlive())
 				th.interrupt();
 		
-		return trySolve(sudoku.iterator());
+		return getSolution();
 	}
-	
-	protected boolean trySolve(ISudokuIterator currentTile) {
-			if (currentTile == null)
-				return true;
-			
-			boolean hasSolution = false;
-			if (currentTile.value() != 0)
-				hasSolution = trySolve(currentTile.next());
-			else {
-				for (int i = 1; i <= Sudoku.SIZE && !hasSolution; ++i) {
-					if (currentTile.set(i)) {
-						hasSolution = trySolve(currentTile.next());
-					}
-				}
-				
-				if (!hasSolution)
-					currentTile.set(0);
-			}
-			
-			return hasSolution;
-	}	
 }

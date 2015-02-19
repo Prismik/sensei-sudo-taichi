@@ -16,7 +16,7 @@ public class SudokuReverseIterator implements ISudokuIterator {
 	private boolean hasEnded;
 	
 	public SudokuReverseIterator(Sudoku sudoku) {
-		this.sudoku = new Sudoku(sudoku);
+		this.sudoku = sudoku;
 		this.row = Sudoku.SIZE - 1;
 		this.column = Sudoku.SIZE - 1;
 		this.hasEnded = false;
