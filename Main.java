@@ -18,7 +18,7 @@ public class Main {
 			Sudoku sudoku = new Sudoku(filename);
 			Interval i = new Interval();
 			SudokuSolver solver = new SudokuSolver();
-			if (solver.solve(sudoku)) {
+			if (solver.solve(sudoku) != null) {
 				i.stop();
 				System.out.print(Long.toString(i.current()) + " milliseconds to solve the sudoku.");
 			}

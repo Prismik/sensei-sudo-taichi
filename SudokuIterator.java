@@ -16,7 +16,7 @@ public class SudokuIterator implements ISudokuIterator {
 	private boolean hasEnded;
 	
 	public SudokuIterator(Sudoku sudoku) {
-		this.sudoku = new Sudoku(sudoku);
+		this.sudoku = sudoku;
 		this.row = 0;
 		this.column = 0;
 		this.hasEnded = false;

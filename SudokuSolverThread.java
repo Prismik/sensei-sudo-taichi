@@ -19,9 +19,7 @@ public class SudokuSolverThread extends Thread {
 	}
 
 	public void run() {
-		Sudoku foundSolution = null;
-		if ((foundSolution = trySolve(iter)) != null)
-			sudSol.setSolution(foundSolution);
+		trySolve(iter);
 	}
 	
 	private Sudoku trySolve(ISudokuIterator currentTile) {
