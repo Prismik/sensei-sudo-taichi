@@ -19,6 +19,12 @@ public class Sudoku {
 		deserialize(filename);
 	}
 	
+	public Sudoku(Sudoku s) {
+		for (int i = 0;i < SIZE; ++i)
+			for (int j = 0;j < SIZE; ++j)
+				this.board[i][j] = s.board[i][j];
+	}
+	
 	public void deserialize(String filename) {
 		BufferedReader reader = null;
 		try {
@@ -88,6 +94,10 @@ public class Sudoku {
 
 	public ISudokuIterator iterator() {
 		return new SudokuIterator(this);
+	}
+	
+	public ISudokuIterator reverseIterator() {
+		return new SudokuReverseIterator(this);
 	}
 	
 	@Override
