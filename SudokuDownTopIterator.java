@@ -18,7 +18,7 @@ public class SudokuDownTopIterator implements ISudokuIterator {
 	public SudokuDownTopIterator(Sudoku sudoku) {
 		this.sudoku = new Sudoku(sudoku);
 		this.row = Sudoku.SIZE - 1;
-		this.column = Sudoku.SIZE - 1;
+		this.column = 0;
 		this.hasEnded = false;
 	}
 	
@@ -35,7 +35,7 @@ public class SudokuDownTopIterator implements ISudokuIterator {
 	public ISudokuIterator next() {
 		SudokuDownTopIterator iter = new SudokuDownTopIterator(sudoku);
 		
-		if (this.column != 0) {
+		if (this.column != Sudoku.SIZE - 1) {
 			iter.column = this.column;
 			iter.row = this.row - 1;
 		} 
@@ -45,7 +45,7 @@ public class SudokuDownTopIterator implements ISudokuIterator {
 				iter.hasEnded = true;
 			}	
 		else {
-				iter.column = this.column - 1;
+				iter.column = this.column + 1;
 				iter.row = Sudoku.SIZE - 1;
 			}
 		}

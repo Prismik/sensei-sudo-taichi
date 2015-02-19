@@ -35,8 +35,10 @@ public class SudokuSolver {
 		
 		threads.add(new SudokuSolverThread(this, sudoku.iterator()));
 		threads.add(new SudokuSolverThread(this, new Sudoku(sudoku).reverseIterator()));
-		//threads.add(new SudokuSolverThread(this, new Sudoku(sudoku).topDownIterator()));
-		//threads.add(new SudokuSolverThread(this, new Sudoku(sudoku).downTopIterator()));
+		threads.add(new SudokuSolverThread(this, new Sudoku(sudoku).topDownIterator()));
+		threads.add(new SudokuSolverReverseThread(this, new Sudoku(sudoku).iterator()));
+		threads.add(new SudokuSolverReverseThread(this, new Sudoku(sudoku).reverseIterator()));
+		threads.add(new SudokuSolverThread(this, new Sudoku(sudoku).downTopIterator()));
 		
 		for (Thread th : threads)
 			th.start();
