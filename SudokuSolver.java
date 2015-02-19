@@ -10,14 +10,8 @@ import java.awt.Point;
  * Class which can solve and fill a sudoku
  */
 public class SudokuSolver {
-	volatile private boolean solutionFound;
 	
 	public SudokuSolver() {
-		this.solutionFound = false;
-	}
-	
-	synchronized public void setFoundSolution(boolean foundIt) {
-		this.solutionFound = foundIt;
 	}
 	
 	public boolean solve(Sudoku sudoku) {
